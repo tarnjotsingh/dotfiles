@@ -5,12 +5,15 @@ URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=20
 URxvt.letterSpace: -1
 !URxvt.lineSpace:-1
 
+URxvt.transparent: true
+URxvt.shading: 25
 URxvt.scrollBar: false
 
 ! hard contrast: *background: #1d2021
 *background: #282828
 ! soft contrast: *background: #32302f
-*foreground: #ebdbb2
+! *foreground: !#ebdbb2
+*foreground: #eeeeee
 ! Black + DarkGrey
 *color0:  #282828
 *color8:  #928374

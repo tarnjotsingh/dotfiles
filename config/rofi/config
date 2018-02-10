@@ -1,0 +1,4 @@
+rofi.combi-modi:	window,drun,ssh
+rofi.theme: 		/usr/share//rofi/themes//lb.rasi
+rofi.font:		Monospace 15
+rofi.modi:		combi
