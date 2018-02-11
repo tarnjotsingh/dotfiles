@@ -200,7 +200,6 @@ bar {
 
 # Set i3lock
 # bindsym $mod+Shift+x exec i3lock -i /home/tarnjotv/Pictures/golden-temple.png
-# Using a script to perfectly match the defined image onto all displays regardless of differences in resolution.
 bindsym $mod+Shift+x exec /opt/i3lock-multimonitor/lock -i /home/tarnjotv/Pictures/golden-temple.png
 
 # Start rofi, will use config in ~/.config/rofi/config
@@ -209,6 +208,5 @@ bindsym $mod+d exec rofi -show combi
 # Set background with feh
 exec_always --no-startup-id feh --bg-fill /home/tarnjotv/Pictures/golden-temple.png
 
-exec dropbox
-exec_always imwheel
-
+# Launch nm-applet
+exec_always --no-startup-id nm-applet
