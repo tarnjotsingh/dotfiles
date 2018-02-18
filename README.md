@@ -15,3 +15,6 @@ i3gaps
 i3blocks
 alsa-utils (using volume module in i3gaps)
 rofi
+
+(optional)
+i3lock-multimonitor:https://github.com/ShikherVerma/i3lock-multimonitor 
