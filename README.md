@@ -13,4 +13,5 @@ Once I've compiled all this information together, I might go ahead and make an R
 imagemagick
 i3gaps
 i3blocks
+alsa-utils (using volume module in i3gaps)
 rofi
