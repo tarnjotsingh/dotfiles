@@ -68,6 +68,10 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# move workspace to another display
+bindsym $mod+Shift+bracketleft move workspace to output left
+bindsym $mod+Shift+bracketright move workspace to output right
+
 # split in horizontal orientation
 bindsym $mod+h split h
 
@@ -151,6 +155,10 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Screen brightness using the compiled program "light"
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+
 # PulseAudio key-bindings
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
@@ -186,7 +194,9 @@ bar {
 	# For an icon try for stuff like nm-applet to be displayed
 	tray_output primary
 	
-	font pango:monospace 9
+	position top
+	
+	font pango:monospace 10
 	
 	colors {
 		background $bg-color
@@ -198,12 +208,76 @@ bar {
 	}
 }
 
+# Make the borders 1 pixel in wize
+# new_window pixel 1
+for_window [class="^.*"] border pixel 2
+
+gaps inner 5 
+gaps outer 2
+smart_gaps on
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# System power shortcuts and stuff, nice way to deal with this stuff
+set $Locker /opt/i3lock-multimonitor/lock -i /home/tarnjotv/Pictures/golden-temple.png
+set $mode_system System (1) lock, (e) logout, (s) hybrid_sleep (h) hibernate, (r) reboot, (Shift+s) shutdown
+
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl hybrid-sleep, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id sytemctl poweroff -i, mode "default"
+
+    # Back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Delete mode "$mode_system"
+
 # Set i3lock
 # bindsym $mod+Shift+x exec i3lock -i /home/tarnjotv/Pictures/golden-temple.png
 bindsym $mod+Shift+x exec /opt/i3lock-multimonitor/lock -i /home/tarnjotv/Pictures/golden-temple.png
 
 # Start rofi, will use config in ~/.config/rofi/config
-bindsym $mod+d exec rofi -show combi
+bindsym $mod+d exec rofi -show
 
 # Set background with feh
 exec_always --no-startup-id feh --bg-fill /home/tarnjotv/Pictures/golden-temple.png
